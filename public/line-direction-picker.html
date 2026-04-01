@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Line Direction</title>
+    <style>
+      :root {
+        --bg: #ffffff;
+        --text: #111111;
+        --muted: #666666;
+        --major: #cfe9ff;
+        --diagonal: #e1d7ff;
+        --minor: #e8edf3;
+        --minor-hover: #d7dee8;
+        --selected: #ffd166;
+        --stroke: #5b6472;
+        --center-bg: #ffffff;
+        --center-stroke: #cbd5e1;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        padding: 12px;
+        font-family: sans-serif;
+        background: var(--bg);
+        color: var(--text);
+      }
+
+      .wrap {
+        display: grid;
+        gap: 10px;
+        justify-items: center;
+      }
+
+      .compass-shell {
+        position: relative;
+        width: 320px;
+        height: 320px;
+      }
+
+      svg {
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+        display: block;
+      }
+
+      .sector {
+        cursor: pointer;
+        stroke: var(--stroke);
+        stroke-width: 1.5;
+        transition: filter 120ms ease, transform 120ms ease;
+      }
+
+      .sector.major {
+        fill: var(--major);
+      }
+
+      .sector.diagonal {
+        fill: var(--diagonal);
+      }
+
+      .sector.minor {
+        fill: var(--minor);
+      }
+
+      .sector:hover {
+        filter: brightness(1.03);
+      }
+
+      .sector.minor:hover {
+        fill: var(--minor-hover);
+      }
+
+      .sector.selected {
+        fill: var(--selected) !important;
+      }
+
+      .major-label {
+        font-size: 11px;
+        font-weight: 700;
+        fill: #111111;
+        text-anchor: middle;
+        dominant-baseline: middle;
+        pointer-events: none;
+      }
+
+      .center-hole {
+        position: absolute;
+        inset: 50%;
+        width: 110px;
+        height: 110px;
+        transform: translate(-50%, -50%);
+        border-radius: 999px;
+        background: var(--center-bg);
+        border: 1px solid var(--center-stroke);
+        display: grid;
+        place-items: center;
+        text-align: center;
+        padding: 8px;
+      }
+
+      .center-label {
+        font-size: 22px;
+        font-weight: 800;
+        line-height: 1;
+      }
+
+      .center-sub {
+        margin-top: 4px;
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      .legend {
+        font-size: 12px;
+        color: var(--muted);
+        text-align: center;
+        line-height: 1.4;
+        max-width: 320px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="compass-shell">
+        <svg id="compass" viewBox="0 0 320 320" aria-label="24 point line direction selector"></svg>
+        <div class="center-hole">
+          <div>
+            <div class="center-label" id="centerLabel">E</div>
+            <div class="center-sub" id="centerSub">selected</div>
+          </div>
+        </div>
+      </div>
+      <div class="legend">24-point compass selector for line directions. Major directions and diagonals are labeled on the ring; all directions appear in the center when hovered or selected.</div>
+    </div>
+
+    <script type="module" src="/src/popovers/line-direction-picker.js"></script>
+  </body>
+</html>

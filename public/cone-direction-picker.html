@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cone Direction</title>
+    <style>
+      body { margin: 0; padding: 12px; font-family: sans-serif; background: white; color: #111; }
+      .picker-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+      button { width: 100%; padding: 10px 12px; border: 1px solid #666; border-radius: 8px; background: white; cursor: pointer; text-align: center; }
+      button.selected { border: 2px solid black; background: #e6f0ff; font-weight: 700; }
+      .spacer { min-height: 42px; }
+    </style>
+  </head>
+  <body>
+    <div class="picker-grid" role="group" aria-label="Cone direction">
+      <button type="button" data-direction="NW">NW</button>
+      <button type="button" data-direction="N">N</button>
+      <button type="button" data-direction="NE">NE</button>
+
+      <button type="button" data-direction="W">W</button>
+      <div class="spacer" aria-hidden="true"></div>
+      <button type="button" data-direction="E">E</button>
+
+      <button type="button" data-direction="SW">SW</button>
+      <button type="button" data-direction="S">S</button>
+      <button type="button" data-direction="SE">SE</button>
+    </div>
+
+    <script type="module" src="/src/popovers/cone-direction-picker.js"></script>
+  </body>
+</html>

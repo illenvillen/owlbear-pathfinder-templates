@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Template Radius</title>
+    <style>
+      body { margin: 0; padding: 12px; font-family: sans-serif; background: white; color: #111; }
+      .picker { display: flex; flex-direction: column; gap: 8px; }
+      #options { display: flex; flex-direction: column; gap: 8px; max-height: 340px; overflow-y: auto; padding-right: 2px; }
+      button { width: 100%; padding: 10px 12px; border: 1px solid #666; border-radius: 8px; background: white; cursor: pointer; text-align: left; }
+      button.selected { border: 2px solid black; background: #e6f0ff; font-weight: 700; }
+      #note { margin-top: 8px; font-size: 12px; color: #555; }
+    </style>
+  </head>
+  <body>
+    <div class="picker">
+      <div id="options" role="group" aria-label="Template radius options"></div>
+      <div id="note" aria-live="polite"></div>
+    </div>
+
+    <script type="module" src="/src/popovers/radius-picker.js"></script>
+  </body>
+</html>

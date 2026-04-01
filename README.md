@@ -13,8 +13,26 @@ The tool draws accurate, customizable, grid-aligned AOE templates with a single 
 
 ## Installation
 
+### Public Installation
 <!-- <manifest url> -->
 WORK IN PROGRESS
+
+### Private Installation
+
+1. Clone this repository or download the files
+2. Install dependencies: `npm install`
+3. Start the development server: `npm run dev`
+4. Go to Owlbear Rodeo website and sign in. https://www.owlbear.rodeo/
+5. Clink on Extensions > Manage
+6. Click on "+" icon in top right
+7. Enter the local manifest URL provided by the dev server  
+   (typically something like)
+   http://localhost:5173/manifest.json 
+8. Click ADD
+9. Activate "Pathfinder/Starfinder AOE Templates Tool"
+10. Activate the extension in a room you own
+
+
 
 ## Features
 - Emanations based on creature size and effect size

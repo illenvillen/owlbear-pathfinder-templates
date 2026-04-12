@@ -1,7 +1,8 @@
 import OBR, { buildPath } from "@owlbear-rodeo/sdk";
 import { ID, TOOL_ID } from "../tool.js";
+import { buildEmanationCommands } from "../geometry/geo-emanation.js";
 import { getSnappedOrigin } from "../grid.js";
-import { buildEmanationCommands } from "../geometry/emanation.js";
+
 
 function clampRadiusBySize(creatureSize, feet) {
   const allowed = {

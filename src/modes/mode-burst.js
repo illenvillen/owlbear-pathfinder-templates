@@ -1,7 +1,8 @@
 import OBR, { buildPath } from "@owlbear-rodeo/sdk";
 import { ID, TOOL_ID } from "../tool.js";
+import { buildBurstCommands } from "../geometry/geo-burst.js";
 import { getSnappedIntersection } from "../grid.js";
-import { buildBurstCommands } from "../geometry/burst.js";
+
 
 function clampBurstFeet(feet) {
   const allowed = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60];

@@ -1,8 +1,8 @@
-import OBR, { buildPath } from "@owlbear-rodeo/sdk";
+import OBR from "@owlbear-rodeo/sdk";
 import { ID, TOOL_ID } from "../tool.js";
-import { buildLineCommands } from "../geometry/geo-line.js";
 import { getSnappedOrigin } from "../grid.js";
-
+import { buildLineCommands } from "../geometry/geo-line.js";
+import { buildOwnedTemplatePath } from "./mode-helper.js";
 
 const ALLOWED_FEET = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 80, 100, 120];
 const ALLOWED_DIRECTIONS = new Set([
@@ -41,7 +41,6 @@ export function registerLineMode() {
 
       const templateFeet = clampLineFeet(rawTemplateFeet);
       const direction = normalizeDirection(context.metadata.lineDirection);
-      const creatorId = await OBR.player.getId();
 
       const grid = await getSnappedOrigin(event.pointerPosition, 1, 1);
       if (!grid) return;
@@ -56,36 +55,29 @@ export function registerLineMode() {
           ? context.metadata.strokeColor
           : "#ff0000";
 
-      const item = buildPath()
-        .commands(
-          buildLineCommands(
-            grid.snappedCenter.x,
-            grid.snappedCenter.y,
-            grid.dpi,
-            templateFeet,
-            direction
-          )
-        )
-        .fillColor(fillColor)
-        .fillOpacity(0.2)
-        .strokeColor(strokeColor)
-        .strokeWidth(4)
-        .metadata({
-          [ID]: {
-            templateKind: "line",
-            templateFeet,
-            creatorId,
-            lineFeet: templateFeet,
-            lineDirection: direction,
-            fillColor,
-            strokeColor,
-            gridCellPixels: grid.dpi,
-            gridScaleRaw: grid.scale.raw,
-            gridScaleMultiplier: grid.scale.parsed?.multiplier ?? null,
-            gridScaleUnit: grid.scale.parsed?.unit ?? null,
-          },
-        })
-        .build();
+      const item = await buildOwnedTemplatePath({
+        commands: buildLineCommands(
+          grid.snappedCenter.x,
+          grid.snappedCenter.y,
+          grid.dpi,
+          templateFeet,
+          direction
+        ),
+        strokeColor,
+        fillColor,
+        strokeWidth: 4,
+        fillOpacity: 0.2,
+        extraMetadata: {
+          mode: "line",
+          templateFeet,
+          lineFeet: templateFeet,
+          lineDirection: direction,
+          gridCellPixels: grid.dpi,
+          gridScaleRaw: grid.scale.raw,
+          gridScaleMultiplier: grid.scale.parsed?.multiplier ?? null,
+          gridScaleUnit: grid.scale.parsed?.unit ?? null,
+        },
+      });
 
       await OBR.scene.items.addItems([item]);
     },

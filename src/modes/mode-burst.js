@@ -1,7 +1,8 @@
-import OBR, { buildPath } from "@owlbear-rodeo/sdk";
+import OBR from "@owlbear-rodeo/sdk";
 import { ID, TOOL_ID } from "../tool.js";
-import { buildBurstCommands } from "../geometry/geo-burst.js";
 import { getSnappedIntersection } from "../grid.js";
+import { buildBurstCommands } from "../geometry/geo-burst.js";
+import { buildOwnedTemplatePath } from "./mode-helper.js";
 
 
 function clampBurstFeet(feet) {
@@ -29,7 +30,6 @@ export function registerBurstMode() {
           : 5;
 
       const templateFeet = clampBurstFeet(rawTemplateFeet);
-      const creatorId = await OBR.player.getId();
 
       const grid = await getSnappedIntersection(event.pointerPosition);
       if (!grid) return;
@@ -44,33 +44,27 @@ export function registerBurstMode() {
           ? context.metadata.strokeColor
           : "#ff0000";
 
-      const item = buildPath()
-        .commands(
-          buildBurstCommands(
-            grid.snappedCenter.x,
-            grid.snappedCenter.y,
-            grid.dpi,
-            templateFeet
-          )
-        )
-        .fillColor(fillColor)
-        .fillOpacity(0.2)
-        .strokeColor(strokeColor)
-        .strokeWidth(4)
-        .metadata({
-          [ID]: {
-            templateFeet,
-            creatorId,
-            burstFeet: templateFeet,
-            fillColor,
-            strokeColor,
-            gridCellPixels: grid.dpi,
-            gridScaleRaw: grid.scale.raw,
-            gridScaleMultiplier: grid.scale.parsed?.multiplier ?? null,
-            gridScaleUnit: grid.scale.parsed?.unit ?? null,
-          },
-        })
-        .build();
+      const item = await buildOwnedTemplatePath({
+        commands: buildBurstCommands(
+          grid.snappedCenter.x,
+          grid.snappedCenter.y,
+          grid.dpi,
+          templateFeet
+        ),
+        strokeColor,
+        fillColor,
+        strokeWidth: 4,
+        fillOpacity: 0.2,
+        extraMetadata: {
+          mode: "burst",
+          templateFeet,
+          burstFeet: templateFeet,
+          gridCellPixels: grid.dpi,
+          gridScaleRaw: grid.scale.raw,
+          gridScaleMultiplier: grid.scale.parsed?.multiplier ?? null,
+          gridScaleUnit: grid.scale.parsed?.unit ?? null,
+        },
+      });
 
       await OBR.scene.items.addItems([item]);
     },

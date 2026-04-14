@@ -5,26 +5,133 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cone Direction</title>
     <style>
-      body { margin: 0; padding: 12px; font-family: sans-serif; background: white; color: #111; }
-      .picker-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-      button { width: 100%; padding: 10px 12px; border: 1px solid #666; border-radius: 8px; background: white; cursor: pointer; text-align: center; }
-      button.selected { border: 2px solid black; background: #e6f0ff; font-weight: 700; }
-      .spacer { min-height: 42px; }
+      :root {
+        --bg: #ffffff;
+        --text: #111111;
+        --muted: #666666;
+        --major: #cfe9ff;
+        --diagonal: #e1d7ff;
+        --selected: #ffd166;
+        --stroke: #5b6472;
+        --center-bg: #ffffff;
+        --center-stroke: #cbd5e1;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        padding: 12px;
+        font-family: sans-serif;
+        background: var(--bg);
+        color: var(--text);
+      }
+
+      .wrap {
+        display: grid;
+        gap: 10px;
+        justify-items: center;
+      }
+
+      .compass-shell {
+        position: relative;
+        width: 320px;
+        height: 320px;
+      }
+
+      svg {
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+        display: block;
+      }
+
+      .sector {
+        cursor: pointer;
+        stroke: var(--stroke);
+        stroke-width: 1.5;
+        transition: filter 120ms ease;
+      }
+
+      .sector.major {
+        fill: var(--major);
+      }
+
+      .sector.diagonal {
+        fill: var(--diagonal);
+      }
+
+      .sector:hover {
+        filter: brightness(1.03);
+      }
+
+      .sector.selected {
+        fill: var(--selected) !important;
+      }
+
+      .major-label {
+        font-size: 14px;
+        font-weight: 700;
+        fill: #111111;
+        text-anchor: middle;
+        dominant-baseline: middle;
+        pointer-events: none;
+      }
+
+      .center-hole {
+        position: absolute;
+        inset: 50%;
+        width: 110px;
+        height: 110px;
+        transform: translate(-50%, -50%);
+        border-radius: 999px;
+        background: var(--center-bg);
+        border: 1px solid var(--center-stroke);
+        display: grid;
+        place-items: center;
+        text-align: center;
+        padding: 8px;
+      }
+
+      .center-label {
+        font-size: 22px;
+        font-weight: 800;
+        line-height: 1;
+      }
+
+      .center-sub {
+        margin-top: 4px;
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      .legend {
+        font-size: 12px;
+        color: var(--muted);
+        text-align: center;
+        line-height: 1.4;
+        max-width: 320px;
+      }
     </style>
   </head>
   <body>
-    <div class="picker-grid" role="group" aria-label="Cone direction">
-      <button type="button" data-direction="NW">NW</button>
-      <button type="button" data-direction="N">N</button>
-      <button type="button" data-direction="NE">NE</button>
-
-      <button type="button" data-direction="W">W</button>
-      <div class="spacer" aria-hidden="true"></div>
-      <button type="button" data-direction="E">E</button>
-
-      <button type="button" data-direction="SW">SW</button>
-      <button type="button" data-direction="S">S</button>
-      <button type="button" data-direction="SE">SE</button>
+    <div class="wrap">
+      <div class="compass-shell">
+        <svg id="compass" viewBox="0 0 320 320" aria-label="8 point cone direction selector"></svg>
+        <div class="center-hole">
+          <div>
+            <div class="center-label" id="centerLabel">NE</div>
+            <div class="center-sub" id="centerSub">selected</div>
+          </div>
+        </div>
+      </div>
+      <div class="legend">
+        8-point compass selector for cone directions.
+      </div>
     </div>
 
     <script type="module" src="/src/popovers/cone-direction-picker.js"></script>

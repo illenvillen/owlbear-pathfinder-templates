@@ -122,8 +122,8 @@ async function createConeDirectionAction() {
         anchorElementId: elementId,
         anchorOrigin: { horizontal: "CENTER", vertical: "BOTTOM" },
         transformOrigin: { horizontal: "CENTER", vertical: "TOP" },
-        width: 240,
-        height: 240,
+        width: 344,
+        height: 404,
       });
     },
   });

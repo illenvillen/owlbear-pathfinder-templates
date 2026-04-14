@@ -11,6 +11,7 @@ const DIRECTIONS = [
 const MAJOR_SET = new Set(["N", "E", "S", "W"]);
 const DIAGONAL_SET = new Set(["NE", "SE", "SW", "NW"]);
 const VALID_DIRECTIONS = new Set(DIRECTIONS);
+const ROTATION_OFFSET = -8;
 
 function normalizeDirection(value) {
   return VALID_DIRECTIONS.has(value) ? value : "E";
@@ -72,7 +73,7 @@ OBR.onReady(async () => {
   }
 
   DIRECTIONS.forEach((dir, i) => {
-    const start = i * step;
+    const start = i * step + ROTATION_OFFSET;
     const end = start + step;
     const mid = start + step / 2;
 

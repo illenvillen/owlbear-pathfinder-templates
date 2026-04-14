@@ -67,8 +67,9 @@ This downloads everything needed for the local development server.
 
 If this step fails, confirm Node.js and npm are installed:
 
-``node -v`
-``npm -v`
+``node -v``
+
+``npm -v``
 
 Both commands should return version numbers. If they do not, install Node.js before continuing.
 

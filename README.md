@@ -8,6 +8,7 @@ Supports:
 - Bursts
 - Cones
 - Lines
+- Template removal
 
 The tool draws accurate, customizable, grid-aligned AOE templates with a single click.
 
@@ -41,6 +42,7 @@ WORK IN PROGRESS
 - Lines based on a compass and effect size
 - Player customizable color
 - Pathfinder 2R and Starfinder 2 sizing logic
+- Several options for removing templates (WIP)
 
 ## Status
 

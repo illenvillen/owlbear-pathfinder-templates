@@ -1,7 +1,8 @@
-import OBR, { buildPath } from "@owlbear-rodeo/sdk";
+import OBR from "@owlbear-rodeo/sdk";
 import { ID, TOOL_ID } from "../tool.js";
-import { buildConeCommands, getConeVariant } from "../geometry/geo-cone.js";
 import { getSnappedIntersection } from "../grid.js";
+import { buildConeCommands, getConeVariant } from "../geometry/geo-cone.js";
+import { buildOwnedTemplatePath } from "./mode-helper.js";
 
 
 const ALLOWED_FEET = [5, 10, 15, 20, 30, 40, 50, 60, 80];
@@ -40,7 +41,6 @@ export function registerConeMode() {
       const templateFeet = clampConeFeet(rawTemplateFeet);
       const direction = normalizeDirection(context.metadata.coneDirection);
       const variant = getConeVariant(direction);
-      const creatorId = await OBR.player.getId();
 
       const grid = await getSnappedIntersection(event.pointerPosition);
       if (!grid) return;
@@ -55,37 +55,29 @@ export function registerConeMode() {
           ? context.metadata.strokeColor
           : "#ff0000";
 
-      const item = buildPath()
-        .commands(
-          buildConeCommands(
-            grid.snappedCenter.x,
-            grid.snappedCenter.y,
-            grid.dpi,
-            templateFeet,
-            direction
-          )
-        )
-        .fillColor(fillColor)
-        .fillOpacity(0.2)
-        .strokeColor(strokeColor)
-        .strokeWidth(4)
-        .metadata({
-          [ID]: {
-            templateKind: "cone",
-            creatorId,
-            coneVariant: variant,
-            templateFeet,
-            coneFeet: templateFeet,
-            coneDirection: direction,
-            fillColor,
-            strokeColor,
-            gridCellPixels: grid.dpi,
-            gridScaleRaw: grid.scale.raw,
-            gridScaleMultiplier: grid.scale.parsed?.multiplier ?? null,
-            gridScaleUnit: grid.scale.parsed?.unit ?? null,
-          },
-        })
-        .build();
+      const item = await buildOwnedTemplatePath({
+        commands: buildConeCommands(
+          grid.snappedCenter.x,
+          grid.snappedCenter.y,
+          grid.dpi,
+          templateFeet,
+          direction
+        ),
+        strokeColor,
+        fillColor,
+        strokeWidth: 4,
+        fillOpacity: 0.2,
+        extraMetadata: {
+          mode: "cone",
+          templateFeet,
+          coneFeet: templateFeet,
+          coneDirection: direction,
+          gridCellPixels: grid.dpi,
+          gridScaleRaw: grid.scale.raw,
+          gridScaleMultiplier: grid.scale.parsed?.multiplier ?? null,
+          gridScaleUnit: grid.scale.parsed?.unit ?? null,
+        },
+      });
 
       await OBR.scene.items.addItems([item]);
     },

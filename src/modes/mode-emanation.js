@@ -1,7 +1,8 @@
-import OBR, { buildPath } from "@owlbear-rodeo/sdk";
+import OBR from "@owlbear-rodeo/sdk";
 import { ID, TOOL_ID } from "../tool.js";
-import { buildEmanationCommands } from "../geometry/geo-emanation.js";
 import { getSnappedOrigin } from "../grid.js";
+import { buildEmanationCommands } from "../geometry/geo-emanation.js";
+import { buildOwnedTemplatePath } from "./mode-helper.js";
 
 
 function clampRadiusBySize(creatureSize, feet) {
@@ -60,7 +61,6 @@ export function registerEmanationMode() {
 
       const templateFeet = clampRadiusBySize(creatureSize, rawTemplateFeet);
       const { originWidth, originHeight } = sizeToFootprint(creatureSize);
-      const creatorId = await OBR.player.getId();
 
       const grid = await getSnappedOrigin(
         event.pointerPosition,
@@ -79,38 +79,32 @@ export function registerEmanationMode() {
           ? context.metadata.strokeColor
           : "#ff0000";
 
-      const item = buildPath()
-        .commands(
-          buildEmanationCommands(
-            grid.snappedCenter.x,
-            grid.snappedCenter.y,
-            grid.dpi,
-            feetToRadiusCells(templateFeet),
-            originWidth,
-            originHeight
-          )
-        )
-        .fillColor(fillColor)
-        .fillOpacity(0.2)
-        .strokeColor(strokeColor)
-        .strokeWidth(4)
-        .metadata({
-          [ID]: {
-            creatureSize,
-            templateFeet,
-            creatorId,
-            emanationFeet: templateFeet,
-            originWidth,
-            originHeight,
-            fillColor,
-            strokeColor,
-            gridCellPixels: grid.dpi,
-            gridScaleRaw: grid.scale.raw,
-            gridScaleMultiplier: grid.scale.parsed?.multiplier ?? null,
-            gridScaleUnit: grid.scale.parsed?.unit ?? null,
-          },
-        })
-        .build();
+      const item = await buildOwnedTemplatePath({
+        commands: buildEmanationCommands(
+          grid.snappedCenter.x,
+          grid.snappedCenter.y,
+          grid.dpi,
+          templateFeet / 5,
+          originWidth,
+          originHeight
+        ),
+        strokeColor,
+        fillColor,
+        strokeWidth: 4,
+        fillOpacity: 0.2,
+        extraMetadata: {
+          mode: "emanation",
+          templateFeet,
+          emanationFeet: templateFeet,
+          creatureSize,
+          originWidth,
+          originHeight,
+          gridCellPixels: grid.dpi,
+          gridScaleRaw: grid.scale.raw,
+          gridScaleMultiplier: grid.scale.parsed?.multiplier ?? null,
+          gridScaleUnit: grid.scale.parsed?.unit ?? null,
+        },
+      });
 
       await OBR.scene.items.addItems([item]);
     },

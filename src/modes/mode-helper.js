@@ -1,16 +1,15 @@
-import OBR, { buildPath } from "@owlbear-rodeo/sdk";
+import { buildPath } from "@owlbear-rodeo/sdk";
+import OBR from "@owlbear-rodeo/sdk";
 import { ID } from "../tool.js";
 
-export const TEMPLATE_METADATA_KEY = `${ID}/template`;
-
 export async function buildTemplateMetadata(extra = {}) {
-  const player = await OBR.player.getPlayer();
+  const playerId = await OBR.player.getId();
 
   return {
     [ID]: {
       extension: ID,
-      createdBy: player.id,
-      creatorId: player.id,
+      createdBy: playerId,
+      creatorId: playerId,
       createdAt: Date.now(),
       ...extra,
     },

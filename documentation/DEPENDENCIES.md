@@ -3,6 +3,11 @@
 This document describes runtime dependencies, build dependencies, development tools, and environment assumptions for the Pathfinder / Starfinder AOE Templates Tool extension.
 
 
+# Versioning
+|Version | Date | Author | Notes |
+| v0.1.0 | 4/14/2026 | illenvilen | Initial version |
+
+
 # Runtime Dependencies
 
 The extension depends on a single runtime SDK.

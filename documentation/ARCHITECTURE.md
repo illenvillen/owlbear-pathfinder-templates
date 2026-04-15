@@ -4,7 +4,9 @@ This document describes the runtime structure, module layout, metadata model, an
 
 It is intended for maintainers and contributors.
 
----
+# Versioning
+|Version | Date | Author | Notes |
+| v0.1.0 | 4/14/2026 | illenvilen | Initial version |
 
 # Overview
 

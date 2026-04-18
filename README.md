@@ -20,113 +20,91 @@ WORK IN PROGRESS
 
 ## Private Installation
 
-This private installation method is intended for developers and testers only. There is currently no published version of this extension, so local installation is required for evaluation and testing
+There is currently no published version of this extension. Local installation is required for evaluation and testing. The local server must remain running while the extension is in use.
 
 ### Requirements
 
-Before you begin, make sure you have:
+- **Node.js 18 or newer** — [nodejs.org](https://nodejs.org/) (select the LTS version)
+- **npm** — included with Node.js
+- **Chrome**, **Edge**, or **Firefox**
+- An **Owlbear Rodeo** account with GM access to a room
 
-- **Node.js (version 18 or newer)** installed
-- **npm** installed (included with Node.js)
-- A modern desktop browser such as **Chrome**, **Edge**, or **Firefox**
-- An **Owlbear Rodeo** account
-- Access to a room you own in Owlbear Rodeo, so you can enable the extension there
+### Opening a terminal in the project folder
 
-This project uses a local development server and serves the extension manifest from that server.
+In File Explorer, open the project folder, click the address bar, type `cmd`, and press **Enter**.
+
+Alternatively, hold **Shift** and right-click inside the folder and choose **Open PowerShell window here** or **Open in Terminal**.
 
 ---
 
-### Installation Steps
+### Steps
 
 #### 1. Download the project
 
-Clone this repository with Git, or download and extract the ZIP.
+**Via ZIP:**
 
-If you are cloning this repository:
+1. Click the green **Code** button on the repository page
+2. Select **Download ZIP**
+3. Extract the archive and open the extracted folder
 
-1. Run:
-``git clone https://github.com/illenvillen/owlbear-pathfinder-templates.git``
+**Via Git:**
 
-2. Then move into the project folder:
-``cd owlbear-pathfinder-templates``
-
-If you downloaded a ZIP instead:
-
-1. Extract the archive
-2. Open the extracted project folder
-3. Open a terminal inside that folder
-
+```sh
+git clone https://github.com/illenvillen/owlbear-pathfinder-templates.git
+cd owlbear-pathfinder-templates
+```
 
 #### 2. Install dependencies
 
-Install required project dependencies using npm:
+Open a terminal in the project folder and run:
 
-``npm install``
+```sh
+npm install
+```
 
-This downloads everything needed for the local development server.
+This only needs to be run once. If `npm` is not recognized, install Node.js from [nodejs.org](https://nodejs.org/), then reopen the terminal and try again.
 
-If this step fails, confirm Node.js and npm are installed:
+#### 3. Start the server
 
-``node -v``
+```sh
+npm run dev
+```
 
-``npm -v``
+Keep this terminal open. The server must stay running while you use the extension.
 
-Both commands should return version numbers. If they do not, install Node.js before continuing.
+When ready, the terminal will show:
 
+```
+  ➜  Local:   http://localhost:5173/
+```
 
-#### 3. Start the local development server
+If Windows shows a firewall prompt, click **Allow**.
 
-Run:
+#### 4. Confirm the server is running
 
-``npm run dev``
+Open this URL in your browser:
 
-This starts the local development server used to host the extension.
-
-After starting successfully, the terminal should display something similar to:
-
-Local: http://localhost:5173/
-
-The extension manifest will be available at:
-
+```
 http://localhost:5173/manifest.json
+```
 
-Open that address in your browser to confirm the server is running correctly before continuing.
+If the page displays JSON, the server is running correctly.
 
+#### 5. Add the extension in Owlbear Rodeo
 
-#### 4. Verify the manifest is reachable
+1. Go to [owlbear.rodeo](https://www.owlbear.rodeo/) and sign in
+2. Open **Extensions → Manage**
+3. Click the **+** icon
+4. Paste the URL:
 
-Open the following address in your browser:
-
+```
 http://localhost:5173/manifest.json
-
-If the page loads JSON content, the development server is running correctly.
-
-If it does not load, return to the previous step and confirm the server is still running.
-
-
-#### 5. Open Owlbear Rodeo
-
-Navigate to:
-
-https://www.owlbear.rodeo/
-
-Sign in to your account.
-
-
-#### 6. Add and enable the extension
-
-Inside Owlbear Rodeo:
-
-1. Open **Extensions**
-2. Select **Manage**
-3. Click the **+** icon in the top-right corner
-4. Paste the manifest URL:
-
-http://localhost:5173/manifest.json
+```
 
 5. Click **Add**
-6. Enable **Pathfinder/Starfinder AOE Templates Tool**
-7. Activate the extension inside a room that you own
+6. Enable **Pathfinder/Starfinder AOE Templates Tool** and activate it in a room you own
+
+> **Each session:** Run `npm run dev` again after restarting your computer or closing the terminal.
 
 ## Features
 - Emanations based on creature size and effect size

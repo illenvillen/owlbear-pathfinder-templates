@@ -8,6 +8,7 @@ Supports:
 - Bursts
 - Cones
 - Lines
+- Template removal
 
 The tool draws accurate, customizable, grid-aligned AOE templates with a single click.
 
@@ -17,22 +18,93 @@ The tool draws accurate, customizable, grid-aligned AOE templates with a single 
 <!-- <manifest url> -->
 WORK IN PROGRESS
 
-### Private Installation
+## Private Installation
 
-1. Clone this repository or download the files
-2. Install dependencies: `npm install`
-3. Start the development server: `npm run dev`
-4. Go to Owlbear Rodeo website and sign in. https://www.owlbear.rodeo/
-5. Clink on Extensions > Manage
-6. Click on "+" icon in top right
-7. Enter the local manifest URL provided by the dev server  
-   (typically something like)
-   http://localhost:5173/manifest.json 
-8. Click ADD
-9. Activate "Pathfinder/Starfinder AOE Templates Tool"
-10. Activate the extension in a room you own
+There is currently no published version of this extension. Local installation is required for evaluation and testing. The local server must remain running while the extension is in use.
 
+### Requirements
 
+- **Node.js 18 or newer** — [nodejs.org](https://nodejs.org/) (select the LTS version)
+- **npm** — included with Node.js
+- **Chrome**, **Edge**, or **Firefox**
+- An **Owlbear Rodeo** account with GM access to a room
+
+### Opening a terminal in the project folder
+
+In File Explorer, open the project folder, click the address bar, type `cmd`, and press **Enter**.
+
+Alternatively, hold **Shift** and right-click inside the folder and choose **Open PowerShell window here** or **Open in Terminal**.
+
+---
+
+### Steps
+
+#### 1. Download the project
+
+**Via ZIP:**
+
+1. Click the green **Code** button on the repository page
+2. Select **Download ZIP**
+3. Extract the archive and open the extracted folder
+
+**Via Git:**
+
+```sh
+git clone https://github.com/illenvillen/owlbear-pathfinder-templates.git
+cd owlbear-pathfinder-templates
+```
+
+#### 2. Install dependencies
+
+Open a terminal in the project folder and run:
+
+```sh
+npm install
+```
+
+This only needs to be run once. If `npm` is not recognized, install Node.js from [nodejs.org](https://nodejs.org/), then reopen the terminal and try again.
+
+#### 3. Start the server
+
+```sh
+npm run dev
+```
+
+Keep this terminal open. The server must stay running while you use the extension.
+
+When ready, the terminal will show:
+
+```
+  ➜  Local:   http://localhost:5173/
+```
+
+If Windows shows a firewall prompt, click **Allow**.
+
+#### 4. Confirm the server is running
+
+Open this URL in your browser:
+
+```
+http://localhost:5173/manifest.json
+```
+
+If the page displays JSON, the server is running correctly.
+
+#### 5. Add the extension in Owlbear Rodeo
+
+1. Go to [owlbear.rodeo](https://www.owlbear.rodeo/) and sign in
+2. Open **Extensions → Manage**
+3. Click the **+** icon
+4. Paste the URL:
+
+```
+http://localhost:5173/manifest.json
+```
+
+5. Click **Add**
+6. Enable **Pathfinder/Starfinder AOE Templates Tool** and activate it in a room you own
+
+> **Each session:** Run `npm run dev` again after restarting your computer or closing the terminal.
 
 ## Features
 - Emanations based on creature size and effect size
@@ -41,6 +113,7 @@ WORK IN PROGRESS
 - Lines based on a compass and effect size
 - Player customizable color
 - Pathfinder 2R and Starfinder 2 sizing logic
+- Several options for removing templates (WIP)
 
 ## Status
 
